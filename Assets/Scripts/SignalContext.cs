@@ -17,15 +17,14 @@ public class SignalContext : MVCSContext
         base.addCoreComponents();
 
         injectionBinder.Unbind<ICommandBinder>();
-        injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>().ToSingleton();
+        injectionBinder.Bind<ICommandBinder>().To<EventCommandBinder>().ToSingleton();
     }
 
     public override void Launch()
     {
         base.Launch();
 
-        var startSignal = injectionBinder.GetInstance<AppStartSignal>();
-        startSignal.Dispatch();
+        dispatcher.Dispatch(EventCommandType.AppStart);
     }
 
 }

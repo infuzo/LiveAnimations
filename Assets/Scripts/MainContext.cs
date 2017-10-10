@@ -5,6 +5,13 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 
+public enum EventCommandType
+{
+    AppStart,
+    ChangeCoinsBalance,
+    CoinsBalanceChanged
+}
+
 public class MainContext : SignalContext
 {
     
@@ -22,9 +29,9 @@ public class MainContext : SignalContext
         injectionBinder.Bind<ISocial>().To<FacebookSocial>().ToName(SocialNetworkType.Facebook);
         injectionBinder.Bind<ISocial>().To<TwitterSocial>().ToName(SocialNetworkType.Twitter);
 
-        commandBinder.Bind<AppStartSignal>().InSequence().To<ShowLoadingCommand>().To<AppStartCommand>().To<HideLoadingCommand>().Once();
-        commandBinder.Bind<ChangeCoinsSignal>().To<ChangeCoinsCommand>();
-        commandBinder.Bind<CoinsBalanceChangedSignal>().To<CoinsBalanceChangedCommand>();
+        commandBinder.Bind(EventCommandType.AppStart).InSequence().To<ShowLoadingCommand>().To<AppStartCommand>().To<HideLoadingCommand>().Once();
+        commandBinder.Bind(EventCommandType.ChangeCoinsBalance).To<ChangeCoinsCommand>();
+        commandBinder.Bind(EventCommandType.CoinsBalanceChanged).To<CoinsBalanceChangedCommand>();
 
     }
 

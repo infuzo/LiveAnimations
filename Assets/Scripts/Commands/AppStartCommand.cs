@@ -2,13 +2,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class AppStartCommand : Command
+public class AppStartCommand : EventCommand
 {
 
     [Inject]
     public ICoroutineExecuter CoroutineExecuter { get; private set; }
-    [Inject]
-    public ChangeCoinsSignal ChangeCoinsSignal { get; private set; }
+
     [Inject(SocialNetworkType.Facebook)]
     public ISocial FacebookSocial { get; private set; }
     [Inject(SocialNetworkType.Twitter)]
@@ -26,7 +25,9 @@ public class AppStartCommand : Command
     {
         yield return new WaitForSeconds(2f);
 
-        ChangeCoinsSignal.Dispatch(50);
+        dispatcher.Dispatch(EventCommandType.ChangeCoinsBalance, 100);
+        dispatcher.Dispatch(EventCommandType.ChangeCoinsBalance, 50);
+        
         FacebookSocial.Login();
         TwitterSocial.Login();
 

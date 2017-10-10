@@ -1,26 +1,22 @@
 ﻿using strange.extensions.command.impl;
+using strange.extensions.dispatcher.eventdispatcher.impl;
 using UnityEngine;
 
-public class ChangeCoinsCommand : Command
+public class ChangeCoinsCommand : EventCommand
 {
 
     [Inject]
     public UserDataModel UserDataModel { get; private set; }
-    [Inject]
-    public int AmountOfChange { get; private set; }
-
-    [Inject]
-    public CoinsBalanceChangedSignal CoinsBalanceChangedSignal { get; private set; }
 
     public override void Execute()
     {
-        if(UserDataModel.CurrencyBalance + AmountOfChange < 0)
+        if (UserDataModel.CurrencyBalance + (int)((TmEvent)data).data < 0)
         {
             return;
         }
 
-        UserDataModel.CurrencyBalance += AmountOfChange;
-        CoinsBalanceChangedSignal.Dispatch();
+        UserDataModel.CurrencyBalance += (int)((TmEvent)data).data;
+        dispatcher.Dispatch(EventCommandType.CoinsBalanceChanged);
     }
 
 }
