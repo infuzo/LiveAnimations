@@ -12,7 +12,7 @@ public enum EventCommandType
     CoinsBalanceChanged
 }
 
-public class MainContext : SignalContext
+public class MainContext : EventCommandContext
 {
     
     public MainContext(MonoBehaviour view) : base(view)
