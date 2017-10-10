@@ -4,10 +4,10 @@ using strange.extensions.command.impl;
 using strange.extensions.context.api;
 using strange.extensions.context.impl;
 
-public class SignalContext : MVCSContext
+public class EventCommandContext : MVCSContext
 {
 
-    public SignalContext(MonoBehaviour contextView) : base(contextView, ContextStartupFlags.MANUAL_MAPPING)
+    public EventCommandContext(MonoBehaviour contextView) : base(contextView, ContextStartupFlags.MANUAL_MAPPING)
     {
 
     }
