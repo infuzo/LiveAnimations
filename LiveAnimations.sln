@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveAnimations", "LiveAnimations.csproj", "{47BE3E60-E278-252E-305C-C0E8E845EAFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveAnimations.Editor", "LiveAnimations.Editor.csproj", "{8B4A76AF-31F0-B90B-DAEE-CA125433AADC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47BE3E60-E278-252E-305C-C0E8E845EAFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47BE3E60-E278-252E-305C-C0E8E845EAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47BE3E60-E278-252E-305C-C0E8E845EAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47BE3E60-E278-252E-305C-C0E8E845EAFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B4A76AF-31F0-B90B-DAEE-CA125433AADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4A76AF-31F0-B90B-DAEE-CA125433AADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4A76AF-31F0-B90B-DAEE-CA125433AADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4A76AF-31F0-B90B-DAEE-CA125433AADC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

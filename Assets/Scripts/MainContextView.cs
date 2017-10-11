@@ -1,12 +1,27 @@
 ﻿using strange.extensions.context.impl;
+using UnityEngine;
 
-public class MainContextView : ContextView
+namespace Runner
 {
-
-    void Start()
+    public class MainContextView : ContextView
     {
-        var context = new MainContext(this);
-        context.Start();
+
+        [Inject]
+        public Controllers.PlayerLeavePartOfWorldSignal PlayerLeavePartOfWorldSignal { get; private set; }
+
+        void Start()
+        {
+            var context = new MainContext(this);
+            context.Start();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                PlayerLeavePartOfWorldSignal.Dispatch();
+            }
+        }
+
     }
-	
 }
