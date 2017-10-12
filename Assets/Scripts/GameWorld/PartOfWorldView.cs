@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Runner.World
+namespace Runner.Views
 {
     public interface IPartOfWorldView
     {
@@ -19,6 +19,7 @@ namespace Runner.World
         [System.Serializable]
         public class LineInfo
         {
+
             [SerializeField]
             Transform[] wayPoints;
 
@@ -42,6 +43,11 @@ namespace Runner.World
         public Vector3 EndPointPosition
         {
             get { return endPoint.position; }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            Debug.Log(other);
         }
 
     }

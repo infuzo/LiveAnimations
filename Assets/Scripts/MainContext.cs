@@ -4,7 +4,9 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 using Runner.Controllers;
+using Runner.Controllers.Player;
 using Runner.Services;
+using Runner.Views;
 
 namespace Runner
 {
@@ -22,10 +24,14 @@ namespace Runner
 
             injectionBinder.Bind<ICoroutineExecuter>().To<CoroutineExecuter>().ToSingleton();
             injectionBinder.Bind<IPartsOfWorldManager>().To<PartsOfWorldManager>().ToSingleton();
+            injectionBinder.Bind<PlayerView>().To<PlayerView>().ToSingleton();
 
-            commandBinder.Bind<AppStartSignal>().InSequence().To<AppStartCommand>().To<ChangedPartsOfWorldAmountCommand>().Once();
+            commandBinder.Bind<AppStartSignal>().InSequence().To<AppStartCommand>().To<ChangedPartsOfWorldAmountCommand>().To<CreatePlayerCommand>().Once();
             commandBinder.Bind<ChangedPartsOfWorldAmountSignal>().To<ChangedPartsOfWorldAmountCommand>();
             commandBinder.Bind<PlayerLeavePartOfWorldSignal>().InSequence().To<PlayerLeavePartOfWorldCommand>();
+            commandBinder.Bind<ChangeLineSignal>().To<ChangeLineCommand>().Pooled();
+            commandBinder.Bind<MovementSignal>().To<MovementCommand>().Pooled();
+            
         }
 
     }

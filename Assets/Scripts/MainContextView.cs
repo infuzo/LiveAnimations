@@ -1,25 +1,30 @@
 ﻿using strange.extensions.context.impl;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Runner
 {
     public class MainContextView : ContextView
     {
-
-        [Inject]
-        public Controllers.PlayerLeavePartOfWorldSignal PlayerLeavePartOfWorldSignal { get; private set; }
-
+        
         void Start()
         {
             var context = new MainContext(this);
             context.Start();
         }
 
-        private void Update()
+        [Inject]
+        public Controllers.Player.ChangeLineSignal ChangeLineSignal { get; private set; } //TODO: remove
+
+        private void Update() //TODO: remove
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                PlayerLeavePartOfWorldSignal.Dispatch();
+                ChangeLineSignal.Dispatch(Controllers.Player.ChangeLineType.Left);
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ChangeLineSignal.Dispatch(Controllers.Player.ChangeLineType.Right);
             }
         }
 

@@ -30,6 +30,5 @@ namespace Runner
             var startSignal = injectionBinder.GetInstance<AppStartSignal>();
             startSignal.Dispatch();
         }
-
     }
 }
