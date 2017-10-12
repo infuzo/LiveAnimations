@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Runner.Controllers;
 
 namespace Runner.Views
 {
+
     public interface IPartOfWorldView
     {
-
+        
         PartOfWorldView.LineInfo[] LinesInfo { get; }
 
         Vector3 EndPointPosition { get; }
@@ -35,6 +37,13 @@ namespace Runner.Views
         [SerializeField]
         Transform endPoint;
 
+        PlayerLeavePartOfWorldSignal playerLeavePartOfWorldSignal;
+
+        private void OnTriggerExit(Collider other)
+        {
+            playerLeavePartOfWorldSignal.Dispatch(this as IPartOfWorldView);
+        }
+
         public LineInfo[] LinesInfo
         {
             get { return linesInfo; }
@@ -45,10 +54,11 @@ namespace Runner.Views
             get { return endPoint.position; }
         }
 
-        private void OnTriggerExit(Collider other)
+        public void InitSignal(PlayerLeavePartOfWorldSignal playerLeavePartOfWorldSignal)
         {
-            Debug.Log(other);
+            this.playerLeavePartOfWorldSignal = playerLeavePartOfWorldSignal;
         }
+
 
     }
 

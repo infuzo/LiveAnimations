@@ -14,10 +14,14 @@ namespace Runner.Controllers.Player
         public PlayerView PlayerView { get; private set; }
         [Inject]
         public MovementSignal MovementSignal { get; private set; }
+        [Inject]
+        public CheckForNewWaypointSignal CheckForNewWaypointSignal { get; private set; }
+        [Inject]
+        public DebugLineSignal DebugLineSignal { get; private set; }
 
         public override void Execute()
         {
-            PlayerView.InitSignalInstances(MovementSignal);
+            PlayerView.InitSignalInstances(MovementSignal, CheckForNewWaypointSignal, DebugLineSignal);
 
             PlayerView.CurrentLineIndex = startLineIndex;
             PlayerView.Transform.position = GameWorldModel.Instance.AllWaypoints[startLineIndex].First.Value.position;

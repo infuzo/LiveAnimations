@@ -82,7 +82,9 @@
     <Compile Include="Assets\Scripts\Controllers\AppStartCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\ChangedPartsOfWorldAmountCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\ChangeLineCommand.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Player\CheckForNewWaypointCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\CreatePlayerCommand.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Player\DebugLineCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\MovementCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerLeavePartOfWorldCommand.cs" />
     <Compile Include="Assets\Scripts\GameWorld\GameWorldModel.cs" />

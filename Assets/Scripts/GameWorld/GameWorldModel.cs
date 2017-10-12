@@ -9,7 +9,7 @@ namespace Runner
     public class GameWorldModel : MonoBehaviour
     {
 
-        public const byte MaxPartOfWorldCount = 2;
+        public const byte MaxPartOfWorldCount = 3;
         public const byte LinesCount = 3;
 
         public static GameWorldModel Instance { get; private set; }

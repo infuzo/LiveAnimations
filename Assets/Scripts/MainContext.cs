@@ -1,8 +1,4 @@
-﻿using strange.extensions.command.api;
-using strange.extensions.command.impl;
-using strange.extensions.context.api;
-using strange.extensions.context.impl;
-using UnityEngine;
+﻿using UnityEngine;
 using Runner.Controllers;
 using Runner.Controllers.Player;
 using Runner.Services;
@@ -31,7 +27,9 @@ namespace Runner
             commandBinder.Bind<PlayerLeavePartOfWorldSignal>().InSequence().To<PlayerLeavePartOfWorldCommand>();
             commandBinder.Bind<ChangeLineSignal>().To<ChangeLineCommand>().Pooled();
             commandBinder.Bind<MovementSignal>().To<MovementCommand>().Pooled();
-            
+            commandBinder.Bind<CheckForNewWaypointSignal>().To<CheckForNewWaypointCommand>().Pooled();
+            commandBinder.Bind<DebugLineSignal>().To<DebugLineCommand>().Pooled();
+
         }
 
     }

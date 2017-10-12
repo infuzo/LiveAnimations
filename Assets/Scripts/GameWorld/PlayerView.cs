@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Runner.Controllers.Player;
-using strange.extensions.command.impl;
 
 namespace Runner.Views
 {
     public class PlayerView 
     {
-
-
         class PlayerViewWorker : MonoBehaviour
         {
 
@@ -20,12 +17,20 @@ namespace Runner.Views
             #region Signal instances
 
             public MovementSignal MovementSignal { get; set; }
+            public CheckForNewWaypointSignal CheckForNewWaypointSignal { get; set; }
+            public DebugLineSignal DebugLineSignal { get; set; }
 
             #endregion
 
             private void FixedUpdate()
             {
                 MovementSignal.Dispatch();
+                CheckForNewWaypointSignal.Dispatch();
+            }
+
+            private void OnDrawGizmos()
+            {
+                DebugLineSignal.Dispatch();
             }
 
         }
@@ -37,17 +42,16 @@ namespace Runner.Views
         PlayerViewWorker currentPlayer;
         Transform targetWayPoint;
 
-        
-
-
         public PlayerView()
         {
             currentPlayer = MonoBehaviour.Instantiate(GameWorldModel.Instance.PlayerPrefab).AddComponent<PlayerViewWorker>();
         }
 
-        public void InitSignalInstances(MovementSignal movementSignal)
+        public void InitSignalInstances(MovementSignal movementSignal, CheckForNewWaypointSignal checkForNewWaypointSignal, DebugLineSignal debugLineSignal)
         {
             currentPlayer.MovementSignal = movementSignal;
+            currentPlayer.CheckForNewWaypointSignal = checkForNewWaypointSignal;
+            currentPlayer.DebugLineSignal = debugLineSignal;
         }
 
         public Animator Animator

@@ -21,11 +21,11 @@ namespace Runner.Services
         class PartsOfWorldManagerWorker : MonoBehaviour
         {
 
-            const byte startPoolSize = 3;
+            const byte startPoolSize = GameWorldModel.MaxPartOfWorldCount + 1;
 
             List<PartOfWorldView> pooledObjects = null;
 
-            private void InitializePool()
+            private void InitializePool(Controllers.PlayerLeavePartOfWorldSignal playerLeavePartOfWorldSignal)
             {
                 if (pooledObjects != null) { return; }
 
@@ -35,12 +35,13 @@ namespace Runner.Services
                 {
                     pooledObjects.Add(Instantiate(GameWorldModel.Instance.PartOfWorldPrefab));
                     pooledObjects[nowObjectIndex].gameObject.SetActive(false);
+                    pooledObjects[nowObjectIndex].InitSignal(playerLeavePartOfWorldSignal);
                 }
             }
 
-            public PartOfWorldView CreateNewPart()
+            public PartOfWorldView CreateNewPart(Controllers.PlayerLeavePartOfWorldSignal playerLeavePartOfWorldSignal)
             {
-                InitializePool();
+                InitializePool(playerLeavePartOfWorldSignal);
 
                 PartOfWorldView newPart = pooledObjects.Find(nowPart => !nowPart.gameObject.activeInHierarchy);
 
@@ -63,6 +64,8 @@ namespace Runner.Services
 
         [Inject]
         public Controllers.ChangedPartsOfWorldAmountSignal ChangedPartsOfWorldAmountSignal { get; private set; }
+        [Inject]
+        public Controllers.PlayerLeavePartOfWorldSignal PlayerLeavePartOfWorldSignal { get; private set; }
 
         PartsOfWorldManagerWorker partsOfWorldManagerWorker;
 
@@ -77,7 +80,7 @@ namespace Runner.Services
 
             Vector3 position = GameWorldModel.Instance.PartsOfWorld.Count > 0 ?
                 GameWorldModel.Instance.PartsOfWorld.ToArray()[GameWorldModel.Instance.PartsOfWorld.Count - 1].EndPointPosition : Vector3.zero;
-            PartOfWorldView newPart = partsOfWorldManagerWorker.CreateNewPart();
+            PartOfWorldView newPart = partsOfWorldManagerWorker.CreateNewPart(PlayerLeavePartOfWorldSignal);
             newPart.transform.position = position;
             newPart.transform.rotation = Quaternion.identity;
             GameWorldModel.Instance.PartsOfWorld.Enqueue(newPart as IPartOfWorldView);
