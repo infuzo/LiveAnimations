@@ -11,11 +11,13 @@ namespace Runner.Controllers.Player
 
         [Inject]
         public Views.PlayerView PlayerView { get; private set; }
+        [Inject]
+        public Models.PlayerModel PlayerModel { get; private set; }
 
         public override void Execute()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(PlayerView.Transform.position, PlayerView.TargetWayPoint.position);
+            Gizmos.DrawLine(PlayerView.Transform.position, PlayerModel.TargetWayPoint.position);
         }
 
     }

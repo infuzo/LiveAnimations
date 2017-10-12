@@ -81,8 +81,11 @@
     <Compile Include="Assets\ApexMecanim\Complete\MecanimMoverComponentComplete.cs" />
     <Compile Include="Assets\Scripts\Controllers\AppStartCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\ChangedPartsOfWorldAmountCommand.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Player\ChangeInvulnerabilityCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\ChangeLineCommand.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Player\ChangeRespawnInvulnerabitiyCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\CheckForNewWaypointCommand.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Player\CollisionCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\CreatePlayerCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\DebugLineCommand.cs" />
     <Compile Include="Assets\Scripts\Controllers\Player\MovementCommand.cs" />
@@ -92,12 +95,11 @@
     <Compile Include="Assets\Scripts\GameWorld\PlayerView.cs" />
     <Compile Include="Assets\Scripts\MainContext.cs" />
     <Compile Include="Assets\Scripts\MainContextView.cs" />
+    <Compile Include="Assets\Scripts\Models\PlayerModel.cs" />
     <Compile Include="Assets\Scripts\Services\CoroutineExecuter.cs" />
+    <Compile Include="Assets\Scripts\Services\ObstaclesManager.cs" />
     <Compile Include="Assets\Scripts\Services\PartsOfWorldManager.cs" />
     <Compile Include="Assets\Scripts\SignalContext.cs" />
-    <Compile Include="Assets\Scripts\Social\FacebookSocial.cs" />
-    <Compile Include="Assets\Scripts\Social\ISocial.cs" />
-    <Compile Include="Assets\Scripts\Social\TwitterSocial.cs" />
     <Compile Include="Assets\StrangeIoC\scripts\strange\extensions\command\api\CommandExceptionType.cs" />
     <Compile Include="Assets\StrangeIoC\scripts\strange\extensions\command\api\CommandKeys.cs" />
     <Compile Include="Assets\StrangeIoC\scripts\strange\extensions\command\api\ICommand.cs" />

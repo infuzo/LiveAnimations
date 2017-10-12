@@ -14,9 +14,9 @@ namespace Runner
         }
 
         [Inject]
-        public Controllers.Player.ChangeLineSignal ChangeLineSignal { get; private set; } //TODO: remove
+        public Controllers.Player.ChangeLineSignal ChangeLineSignal { get; private set; } //TODO: inputmanager
 
-        private void Update() //TODO: remove
+        private void Update() //TODO: inputmanager
         {
             if(Input.GetKeyDown(KeyCode.LeftArrow))
             {

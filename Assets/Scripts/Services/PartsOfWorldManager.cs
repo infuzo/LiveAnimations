@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Runner.Views;
 
@@ -12,7 +10,7 @@ namespace Runner.Services
         bool CreateNextPartOfWorld();
 
         void RemoveOldestPartOfWorld();
-
+        
     }
 
     public class PartsOfWorldManager : IPartsOfWorldManager
@@ -33,10 +31,17 @@ namespace Runner.Services
 
                 for (int nowObjectIndex = 0; nowObjectIndex < startPoolSize; nowObjectIndex++)
                 {
-                    pooledObjects.Add(Instantiate(GameWorldModel.Instance.PartOfWorldPrefab));
-                    pooledObjects[nowObjectIndex].gameObject.SetActive(false);
-                    pooledObjects[nowObjectIndex].InitSignal(playerLeavePartOfWorldSignal);
+                    CreatePooledObject(playerLeavePartOfWorldSignal);
                 }
+            }
+
+            PartOfWorldView CreatePooledObject(Controllers.PlayerLeavePartOfWorldSignal playerLeavePartOfWorldSignal)
+            {
+                PartOfWorldView newPart = Instantiate(GameWorldModel.Instance.PartOfWorldPrefab);
+                pooledObjects.Add(newPart);
+                newPart.gameObject.SetActive(false);
+                newPart.InitSignal(playerLeavePartOfWorldSignal);
+                return newPart;
             }
 
             public PartOfWorldView CreateNewPart(Controllers.PlayerLeavePartOfWorldSignal playerLeavePartOfWorldSignal)
@@ -47,8 +52,7 @@ namespace Runner.Services
 
                 if (newPart == null)
                 {
-                    pooledObjects.Add(Instantiate(GameWorldModel.Instance.PartOfWorldPrefab));
-                    newPart = pooledObjects[pooledObjects.Count - 1];
+                    newPart = CreatePooledObject(playerLeavePartOfWorldSignal);
                 }
 
                 newPart.gameObject.SetActive(true);
@@ -84,7 +88,6 @@ namespace Runner.Services
             newPart.transform.position = position;
             newPart.transform.rotation = Quaternion.identity;
             GameWorldModel.Instance.PartsOfWorld.Enqueue(newPart as IPartOfWorldView);
-
             RelinkAllWaypoints();
 
             return true;
@@ -92,17 +95,17 @@ namespace Runner.Services
 
         void RelinkAllWaypoints()
         {
-            for(int nowLineIndex = 0; nowLineIndex < GameWorldModel.Instance.AllWaypoints.Length; nowLineIndex++)
+            for (int nowLineIndex = 0; nowLineIndex < GameWorldModel.Instance.AllWaypoints.Length; nowLineIndex++)
             {
                 GameWorldModel.Instance.AllWaypoints[nowLineIndex] = new LinkedList<Transform>();
             }
-            
+
             foreach (IPartOfWorldView nowPartOfWorld in GameWorldModel.Instance.PartsOfWorld)
             {
                 int lineCounter = 0;
-                foreach(PartOfWorldView.LineInfo nowLineInfo in nowPartOfWorld.LinesInfo)
+                foreach (PartOfWorldView.LineInfo nowLineInfo in nowPartOfWorld.LinesInfo)
                 {
-                    foreach(Transform nowWayPoint in nowLineInfo.WayPoints)
+                    foreach (Transform nowWayPoint in nowLineInfo.WayPoints)
                     {
                         GameWorldModel.Instance.AllWaypoints[lineCounter].AddLast(nowWayPoint);
                     }
@@ -114,8 +117,8 @@ namespace Runner.Services
         public void RemoveOldestPartOfWorld()
         {
             IPartOfWorldView oldestPart = GameWorldModel.Instance.PartsOfWorld.Dequeue();
+            
             partsOfWorldManagerWorker.RemovePart(oldestPart as PartOfWorldView);
-
             ChangedPartsOfWorldAmountSignal.Dispatch();
         }
 

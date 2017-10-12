@@ -3,6 +3,7 @@ using Runner.Controllers;
 using Runner.Controllers.Player;
 using Runner.Services;
 using Runner.Views;
+using Runner.Models;
 
 namespace Runner
 {
@@ -20,6 +21,8 @@ namespace Runner
 
             injectionBinder.Bind<ICoroutineExecuter>().To<CoroutineExecuter>().ToSingleton();
             injectionBinder.Bind<IPartsOfWorldManager>().To<PartsOfWorldManager>().ToSingleton();
+            injectionBinder.Bind<IObstaclesManager>().To<ObstaclesManager>().ToSingleton();
+            injectionBinder.Bind<PlayerModel>().To<PlayerModel>().ToSingleton();
             injectionBinder.Bind<PlayerView>().To<PlayerView>().ToSingleton();
 
             commandBinder.Bind<AppStartSignal>().InSequence().To<AppStartCommand>().To<ChangedPartsOfWorldAmountCommand>().To<CreatePlayerCommand>().Once();
@@ -29,7 +32,10 @@ namespace Runner
             commandBinder.Bind<MovementSignal>().To<MovementCommand>().Pooled();
             commandBinder.Bind<CheckForNewWaypointSignal>().To<CheckForNewWaypointCommand>().Pooled();
             commandBinder.Bind<DebugLineSignal>().To<DebugLineCommand>().Pooled();
-
+            commandBinder.Bind<CollisionSignal>().To<CollisionCommand>();
+            commandBinder.Bind<ChangeInvulnerabilitySignal>().To<ChangeInvulnerabilityCommand>();
+            commandBinder.Bind<ChangeRespawnInvulnerabitiySignal>().To<ChangeRespawnInvulnerabitiyCommand>();
+            
         }
 
     }

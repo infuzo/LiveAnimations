@@ -12,6 +12,8 @@ namespace Runner
         public const byte MaxPartOfWorldCount = 3;
         public const byte LinesCount = 3;
 
+        public const string ObstacleTag = "Obstacle";
+
         public static GameWorldModel Instance { get; private set; }
 
         /// <summary>
@@ -23,16 +25,27 @@ namespace Runner
         /// </summary>
         public LinkedList<Transform>[] AllWaypoints { get; private set; }
 
+        [Header("Prefabs")]
         [SerializeField]
         PartOfWorldView partOfWorldPrefab;
         [SerializeField]
         GameObject playerPrefab;
+        [SerializeField]
+        GameObject obstaclePrefab;
 
+        [Header("Speed")]
         [SerializeField]
         float forwardSpeed = 2f;
-
         [SerializeField]
         float sideSpeed = 2f;
+
+        [Header("Obstacles")]
+        [SerializeField]
+        float minDistanceBetweenObstacles;
+        [SerializeField]
+        float maxDistanceBetweenObstacles;
+        [SerializeField]
+        float sideCheckDistance;
 
         private void Awake()
         {
@@ -64,6 +77,14 @@ namespace Runner
         public float ForwardSpeed { get { return forwardSpeed; } }
 
         public float SideSpeed { get { return sideSpeed; } }
+
+        public GameObject ObstaclePrefab { get { return obstaclePrefab; } }
+
+        public float MinDistanceBetweenObstacles { get { return minDistanceBetweenObstacles; } }
+
+        public float MaxDistanceBetweenObstacles { get { return maxDistanceBetweenObstacles; } }
+
+        public float SideCheckDistance { get { return sideCheckDistance; } }
 
     }
 }

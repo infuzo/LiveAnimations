@@ -23,6 +23,8 @@ namespace Runner.Controllers
         public PlayerView PlayerView { get; private set; }
         [Inject]
         public ICoroutineExecuter CoroutineExecuter { get; private set; }
+        [Inject]
+        public IObstaclesManager ObstaclesManager { get; private set; }
 
         public override void Execute()
         {
@@ -37,6 +39,7 @@ namespace Runner.Controllers
                 yield return new WaitForFixedUpdate();
             }
 
+            ObstaclesManager.RemoveAllObstaclesFromPartOfWorld(GameWorldModel.Instance.PartsOfWorld.Peek());
             PartsOfWorldManager.RemoveOldestPartOfWorld();
             Release();
         }

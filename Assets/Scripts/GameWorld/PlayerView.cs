@@ -19,6 +19,7 @@ namespace Runner.Views
             public MovementSignal MovementSignal { get; set; }
             public CheckForNewWaypointSignal CheckForNewWaypointSignal { get; set; }
             public DebugLineSignal DebugLineSignal { get; set; }
+            public CollisionSignal CollisionSignal { get; set; }
 
             #endregion
 
@@ -33,25 +34,26 @@ namespace Runner.Views
                 DebugLineSignal.Dispatch();
             }
 
+            private void OnCollisionEnter(Collision collision)
+            {
+                CollisionSignal.Dispatch(collision);
+            }
+
         }
 
-        public byte CurrentLineIndex { get; set; }
-        public float CurrentSideAnimationVelocity { get; set; }
-        public Transform PreviousWayPoint { get; private set; }
-
         PlayerViewWorker currentPlayer;
-        Transform targetWayPoint;
 
         public PlayerView()
         {
             currentPlayer = MonoBehaviour.Instantiate(GameWorldModel.Instance.PlayerPrefab).AddComponent<PlayerViewWorker>();
         }
 
-        public void InitSignalInstances(MovementSignal movementSignal, CheckForNewWaypointSignal checkForNewWaypointSignal, DebugLineSignal debugLineSignal)
+        public void InitSignalInstances(MovementSignal movementSignal, CheckForNewWaypointSignal checkForNewWaypointSignal, DebugLineSignal debugLineSignal, CollisionSignal collisionSignal)
         {
             currentPlayer.MovementSignal = movementSignal;
             currentPlayer.CheckForNewWaypointSignal = checkForNewWaypointSignal;
             currentPlayer.DebugLineSignal = debugLineSignal;
+            currentPlayer.CollisionSignal = collisionSignal;
         }
 
         public Animator Animator
@@ -80,22 +82,23 @@ namespace Runner.Views
                 return currentPlayer.CachedTransform;
             }
         }
+        
+        public void SetLayer(string layerName)
+        {
+            currentPlayer.gameObject.layer = LayerMask.NameToLayer(layerName);
+        }
 
-        public Transform TargetWayPoint
+        public Material MainMaterial
         {
             get
             {
-                return targetWayPoint;
-            }
-            set
-            {
-                targetWayPoint = value;
-                PreviousWayPoint = GameWorldModel.Instance.AllWaypoints[CurrentLineIndex].Find(targetWayPoint).Previous.Value;
+                return currentPlayer.GetComponentInChildren<SkinnedMeshRenderer>().material;
             }
         }
 
-
     }
 }
+
+
 
 

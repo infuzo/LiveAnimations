@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using strange.extensions.command.impl;
 using strange.extensions.signal.impl;
-using UnityEngine;
-using Runner.Views;
+using Runner.Models;
 
 namespace Runner.Controllers.Player
 {
@@ -22,7 +21,7 @@ namespace Runner.Controllers.Player
         [Inject]
         public ChangeLineType ChangeLineType { get; private set; }
         [Inject]
-        public PlayerView PlayerView { get; private set; }
+        public PlayerModel PlayerModel { get; private set; }
 
         public override void Execute()
         {
@@ -30,15 +29,15 @@ namespace Runner.Controllers.Player
             switch(ChangeLineType)
             {
                 case ChangeLineType.Left:
-                    if(PlayerView.CurrentLineIndex > 0)
+                    if(PlayerModel.CurrentLineIndex > 0)
                     {
-                        ChangeLine(PlayerView.CurrentLineIndex - 1);
+                        ChangeLine(PlayerModel.CurrentLineIndex - 1);
                     }
                     break;
                 case ChangeLineType.Right:
-                    if (PlayerView.CurrentLineIndex < GameWorldModel.LinesCount - 1)
+                    if (PlayerModel.CurrentLineIndex < GameWorldModel.LinesCount - 1)
                     {
-                        ChangeLine(PlayerView.CurrentLineIndex + 1);
+                        ChangeLine(PlayerModel.CurrentLineIndex + 1);
                     }
                     break;
             }
@@ -47,9 +46,9 @@ namespace Runner.Controllers.Player
 
         void ChangeLine(int newLineIndex)
         {
-            int currentWayPointIndex = GameWorldModel.Instance.FindIndexOfWaypoint(PlayerView.CurrentLineIndex, PlayerView.TargetWayPoint);
-            PlayerView.CurrentLineIndex = (byte)newLineIndex;
-            PlayerView.TargetWayPoint = GameWorldModel.Instance.GetWaypointByIndex(PlayerView.CurrentLineIndex, currentWayPointIndex);
+            int currentWayPointIndex = GameWorldModel.Instance.FindIndexOfWaypoint(PlayerModel.CurrentLineIndex, PlayerModel.TargetWayPoint);
+            PlayerModel.CurrentLineIndex = (byte)newLineIndex;
+            PlayerModel.TargetWayPoint = GameWorldModel.Instance.GetWaypointByIndex(PlayerModel.CurrentLineIndex, currentWayPointIndex);
         }
 
     }
