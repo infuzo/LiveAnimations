@@ -18,6 +18,8 @@ namespace Runner.Models
 
         public Transform PreviousWayPoint { get; private set; }
 
+        public byte CurrentLifesCount { get; set; }
+
         Transform targetWayPoint;
 
         public Transform TargetWayPoint

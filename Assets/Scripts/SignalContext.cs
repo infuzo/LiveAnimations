@@ -26,9 +26,15 @@ namespace Runner
         public override void Launch()
         {
             base.Launch();
+            
 
             var startSignal = injectionBinder.GetInstance<AppStartSignal>();
             startSignal.Dispatch();
+        }
+
+        protected override void mapBindings()
+        {
+            base.mapBindings();
         }
     }
 }

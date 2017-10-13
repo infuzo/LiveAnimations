@@ -13,20 +13,5 @@ namespace Runner
             context.Start();
         }
 
-        [Inject]
-        public Controllers.Player.ChangeLineSignal ChangeLineSignal { get; private set; } //TODO: inputmanager
-
-        private void Update() //TODO: inputmanager
-        {
-            if(Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                ChangeLineSignal.Dispatch(Controllers.Player.ChangeLineType.Left);
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                ChangeLineSignal.Dispatch(Controllers.Player.ChangeLineType.Right);
-            }
-        }
-
     }
 }

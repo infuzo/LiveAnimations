@@ -14,29 +14,20 @@ namespace Runner.Views
             public Animator CachedAnimator;
             public Rigidbody CachedRigidbody;
 
-            #region Signal instances
-
-            public MovementSignal MovementSignal { get; set; }
-            public CheckForNewWaypointSignal CheckForNewWaypointSignal { get; set; }
-            public DebugLineSignal DebugLineSignal { get; set; }
-            public CollisionSignal CollisionSignal { get; set; }
-
-            #endregion
-
             private void FixedUpdate()
             {
-                MovementSignal.Dispatch();
-                CheckForNewWaypointSignal.Dispatch();
+                MainContext.InjectionBinder.GetInstance<MovementSignal>().Dispatch();
+                MainContext.InjectionBinder.GetInstance<CheckForNewWaypointSignal>().Dispatch();
             }
 
             private void OnDrawGizmos()
             {
-                DebugLineSignal.Dispatch();
+                MainContext.InjectionBinder.GetInstance<DebugLineSignal>().Dispatch();
             }
 
             private void OnCollisionEnter(Collision collision)
             {
-                CollisionSignal.Dispatch(collision);
+                MainContext.InjectionBinder.GetInstance<CollisionSignal>().Dispatch(collision);
             }
 
         }
@@ -46,14 +37,6 @@ namespace Runner.Views
         public PlayerView()
         {
             currentPlayer = MonoBehaviour.Instantiate(GameWorldModel.Instance.PlayerPrefab).AddComponent<PlayerViewWorker>();
-        }
-
-        public void InitSignalInstances(MovementSignal movementSignal, CheckForNewWaypointSignal checkForNewWaypointSignal, DebugLineSignal debugLineSignal, CollisionSignal collisionSignal)
-        {
-            currentPlayer.MovementSignal = movementSignal;
-            currentPlayer.CheckForNewWaypointSignal = checkForNewWaypointSignal;
-            currentPlayer.DebugLineSignal = debugLineSignal;
-            currentPlayer.CollisionSignal = collisionSignal;
         }
 
         public Animator Animator

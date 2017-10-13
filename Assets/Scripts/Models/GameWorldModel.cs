@@ -24,6 +24,10 @@ namespace Runner
         /// Sorted list of all waypoints on lines.
         /// </summary>
         public LinkedList<Transform>[] AllWaypoints { get; private set; }
+        /// <summary>
+        /// Elapsed time in seconds.
+        /// </summary>
+        public float ElapsedTime { get; set; }
 
         [Header("Prefabs")]
         [SerializeField]
@@ -46,6 +50,10 @@ namespace Runner
         float maxDistanceBetweenObstacles;
         [SerializeField]
         float sideCheckDistance;
+
+        [Header("Misc")]
+        [SerializeField]
+        byte startLifesCount = 3;
 
         private void Awake()
         {
@@ -85,6 +93,8 @@ namespace Runner
         public float MaxDistanceBetweenObstacles { get { return maxDistanceBetweenObstacles; } }
 
         public float SideCheckDistance { get { return sideCheckDistance; } }
+
+        public byte StartLifesCount { get { return startLifesCount; } }
 
     }
 }

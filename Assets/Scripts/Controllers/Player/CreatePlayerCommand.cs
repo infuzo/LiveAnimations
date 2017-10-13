@@ -17,27 +17,23 @@ namespace Runner.Controllers.Player
         public PlayerView PlayerView { get; private set; }
 
         [Inject]
-        public MovementSignal MovementSignal { get; private set; }
-        [Inject]
-        public CheckForNewWaypointSignal CheckForNewWaypointSignal { get; private set; }
-        [Inject]
-        public DebugLineSignal DebugLineSignal { get; private set; }
-        [Inject]
-        public CollisionSignal CollisionSignal { get; private set; }
+        public ChangeRespawnInvulnerabitiySignal ChangeRespawnInvulnerabitiySignal { get; private set; }
 
         [Inject]
-        public ChangeRespawnInvulnerabitiySignal ChangeRespawnInvulnerabitiySignal { get; private set; }
+        public Services.IGameManager GameManager { get; private set; }
 
         public override void Execute()
         {
             PlayerModel.CurrentLineIndex = startLineIndex;
             PlayerModel.TargetWayPoint = GameWorldModel.Instance.AllWaypoints[startLineIndex].First.Next.Value;
+            PlayerModel.CurrentLifesCount = GameWorldModel.Instance.StartLifesCount;
 
-            PlayerView.InitSignalInstances(MovementSignal, CheckForNewWaypointSignal, DebugLineSignal, CollisionSignal);
             PlayerView.Transform.position = GameWorldModel.Instance.AllWaypoints[startLineIndex].First.Value.position;
             PlayerView.Animator.SetFloat("Speed", 1f);
 
             ChangeRespawnInvulnerabitiySignal.Dispatch();
+
+            GameManager.StartGameTimer();
         }
 
     }
